@@ -1,4 +1,6 @@
 import 'package:amazon_app_satici/vendor/models/vendor_user_models.dart';
+import 'package:amazon_app_satici/vendor/views/auth/vendor_register_screen.dart';
+import 'package:amazon_app_satici/vendor/views/screens/main_vendor_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +25,15 @@ class LandingScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
+
+          if(!snapshot.data!.exists){
+            return VendorRegistrationScreen();
+          }
           VendorUserModel vendorUserModel = VendorUserModel.fromJson(
               snapshot.data!.data()! as Map<String, dynamic>);
+          if(vendorUserModel.approved == true){
+            return MainVendorScreen();
+          }
           return Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
