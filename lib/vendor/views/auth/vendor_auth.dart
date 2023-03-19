@@ -1,4 +1,5 @@
 import 'package:amazon_app_satici/vendor/views/auth/vendor_register_screen.dart';
+import 'package:amazon_app_satici/vendor/views/screens/landing_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -25,7 +26,7 @@ class VendorAuthScreen extends StatelessWidget {
         }
 
         // Render your application if authenticated
-        return VendorRegistrationScreen();
+        return LandingScreen();
       },
     );
   }
