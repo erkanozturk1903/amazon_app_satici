@@ -3,6 +3,7 @@ import 'package:amazon_app_satici/vendor/views/auth/vendor_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: VendorAuthScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

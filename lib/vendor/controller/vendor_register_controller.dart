@@ -12,19 +12,18 @@ class VendorController {
 
   //TODO: Function to store image in firebase store
 
-  _uploadVendorImageTOStorage(Uint8List? image)async {
-
-   Reference ref = _storage.ref().child('storeImages').child(_auth.currentUser!.uid);
+  _uploadVendorImageTOStorage(Uint8List? image) async {
+    Reference ref =
+        _storage.ref().child('storeImages').child(_auth.currentUser!.uid);
     UploadTask uploadTask = ref.putData(image!);
 
-   TaskSnapshot snapshot = await uploadTask;
+    TaskSnapshot snapshot = await uploadTask;
 
-  String downloadUrl = await snapshot.ref.getDownloadURL();
-  return downloadUrl;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 
   //TODO: Function to store image in firebase storage ends here
-
 
   //TODO: Function to PICK STORe IMAGe
   pickStoreImage(ImageSource source) async {
@@ -41,9 +40,6 @@ class VendorController {
 
   //TODO: FUNTION TO PICK STORA IMAGE ENDS HERE
 
-
-
-
 //TODO: function to save vendor data
   Future<String> registerVendor(
     String businessName,
@@ -52,38 +48,26 @@ class VendorController {
     String countryValue,
     String stateValue,
     String cityValue,
-    String taxOptions,
+    String taxRegistered,
     String taxNumber,
     Uint8List? image,
-  ) async{
+  ) async {
     String res = 'Beklenmeyen bir hata oluştu.';
     try {
-      if (businessName.isNotEmpty &&
-          email.isNotEmpty &&
-          phoneNumber.isNotEmpty &&
-          countryValue.isNotEmpty &&
-          stateValue.isNotEmpty &&
-          cityValue.isNotEmpty &&
-          taxOptions.isNotEmpty &&
-          taxNumber.isNotEmpty &&
-      image != null){
-    String storeImage =await     _uploadVendorImageTOStorage(image);
-        //TODO: SAVE DATA TO CLOUD FİRESTORE
-        await _firestore .collection('vendors').doc(_auth.currentUser!.uid).set({
-          'businessName' : businessName,
-          'email' : email,
-          'phoneNumber' : phoneNumber,
-          'countryValue' : countryValue,
-          'stateValue' : stateValue,
-          'cityValue' : cityValue,
-          'taxOptions' : taxOptions,
-          'taxNumber' : taxNumber,
-          'storeImage' : storeImage,
-      'approved' : false,
-        });
-      }else{
-        res  = 'Lütfen tüm alanları doldurunuz';
-      }
+      String storeImage = await _uploadVendorImageTOStorage(image);
+      //TODO: SAVE DATA TO CLOUD FİRESTORE
+      await _firestore.collection('vendors').doc(_auth.currentUser!.uid).set({
+        'businessName': businessName,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'countryValue': countryValue,
+        'stateValue': stateValue,
+        'cityValue': cityValue,
+        'taxRegistered': taxRegistered,
+        'taxNumber': taxNumber,
+        'storeImage': storeImage,
+        'approved': false,
+      });
     } catch (e) {
       res = e.toString();
     }
