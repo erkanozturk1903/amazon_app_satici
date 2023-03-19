@@ -37,9 +37,11 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   }
 
   List<String> _taxOptions = [
-    'YES',
-    'NO',
+    'EVET',
+    'HAYIR',
   ];
+
+  String? _taxStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -136,23 +138,73 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                       },
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'Vergi Kayıt',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Vergi Kayıt?',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: 100,
+                            child: DropdownButtonFormField(
+                              hint: Text('Seçiniz'),
+                              items: _taxOptions.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _taxStatus = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (_taxStatus == 'EVET')
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Vergi Numarası',
                         ),
                       ),
-                      DropdownButtonFormField(
-                        items: _taxOptions.map((e) {
-
-                        }),
-                        onChanged: onChanged,
+                    ),
+                  InkWell(
+                    onTap: (){},
+                    child: Container(
+                      height: 30,
+                      width: MediaQuery.of(context).size.width - 40,
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.shade900,
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                       ),
-                    ],
-                  )
+                      child: Center(
+                        child: Text(
+                          'KAYDET',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
